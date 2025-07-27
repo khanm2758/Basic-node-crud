@@ -1,0 +1,36 @@
+<h2 class="mb-4 fw-bold text-warning">📋 Your Notes</h2>
+<% if(notes.length > 0){ %>
+<table class="table table-hover shadow-sm">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Title</th>
+      <th>Status</th>
+      <th class="text-end">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% notes.forEach((note, i) => { %>
+      <tr>
+        <td><%= i + 1 %></td>
+        <td><%= note.title %></td>
+        <td>
+          <span class="badge <%= note.done ? 'bg-success' : 'bg-secondary' %>">
+            <%= note.done ? 'Done' : 'Pending' %>
+          </span>
+        </td>
+        <td class="text-end">
+          <a href="/notes/<%= note._id %>" class="btn btn-info btn-sm me-1">View</a>
+          <form action="/notes/<%= note.id %>/delete" method="POST" class="d-inline">
+            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+          </form>
+        </td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>
+<%} else { %>
+  <h3>There is no notes created yet. Please create one!</h3>
+<%} %>
+
+<a href="/notes/create" class="btn btn-info btn-sm me-1">Create new Note</a>

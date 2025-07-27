@@ -1,0 +1,39 @@
+ body {
+      background: linear-gradient(to right, #fff3e0, #ffe0b2);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .main-container {
+      flex: 1;
+    }
+    .note-card {
+      border: 1px solid #f0ad4e;
+      border-radius: 0.5rem;
+      padding: 1.25rem;
+      background-color: #fff;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    .table thead {
+      background-color: #ff9800;
+      color: #fff;
+    }
+    .btn-primary {
+      background-color: #ff9800;
+      border-color: #ff9800;
+    }
+    .btn-primary:hover {
+      background-color: #fb8c00;
+      border-color: #fb8c00;
+    }
+    .btn-outline-primary {
+      color: #ff9800;
+      border-color: #ff9800;
+    }
+    .btn-outline-primary:hover {
+      background-color: #ff9800;
+      color: white;
+    }
+    .btn-success, .btn-warning, .btn-danger, .btn-info, .btn-secondary {
+      border-radius: 20px;
+    }
