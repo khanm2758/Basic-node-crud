@@ -45,8 +45,10 @@ app.get('/notes', async (req, res)=>{
 
 
 
-app.get('/notes/:id/edit', (req, res)=>{
-
+app.get('/notes/:id/edit', async(req, res)=>{
+    
+    const collection = getDb().collection('notes');
+    var note = await collection.findOne({"_id": new ObjectId(req.params.id)});
 
     res.render('notes/edit', {note: note});
 });
@@ -67,18 +69,22 @@ app.post('/notes/create', async (req, res)=>{
 });
 
 
-app.post('/notes/:id/delete', (req, res)=>{
-    const index = notes.findIndex(item => item.id == req.params.id);
-    notes.splice(index, 1);
+app.post('/notes/:id/delete', async (req, res)=>{
+    const collection = getDb().collection('notes');
+    var noteToDelete = await collection.findOne({"_id": new ObjectId(req.params.id)});
+    const deletedNote = await collection.deleteOne(noteToDelete);
+    console.log(deletedNote);
     res.redirect('/notes');
 });
 
-app.post('/notes/:id/edit', (req, res)=>{
-    const note = notes.find(note => note.id == req.params.id);
-    const {title, body} = req.body;
-    note.title = title;
-    note.body = body;
-    res.redirect(`/notes/${note.id}`); 
+app.post('/notes/:id/edit', async (req, res)=>{
+    const collection = getDb().collection('notes');
+    var note = await collection.findOne({"_id": new ObjectId(req.params.id)});
+    note.title = req.body.title? req.body.title: note.title;
+    note.body = req.body.body? req.body.body: note.body;
+    note.isCompleted = req.body.isCompleted? req.body.isCompleted : note.isCompleted;
+    collection.replaceOne({_id: note._id}, note);
+    res.redirect(`/notes/${note._id}`);
 });
 
 
