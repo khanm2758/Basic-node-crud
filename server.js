@@ -5,8 +5,15 @@ const path = require('node:path');
 
 const {connect, getDb} = require('./data/dbConnection');
 
-connect();
-
+connect()
+.then(()=>{
+    app.listen('3000', ()=>{
+    console.log('server running on port 3000');
+});
+})
+.catch(()=>{
+    console.log('Server running in error')
+})
 const notes = require('./data/data');
 const { ObjectId } = require('mongodb');
 
@@ -90,6 +97,4 @@ app.post('/notes/:id/edit', async (req, res)=>{
 
 
 
-app.listen('3000', ()=>{
-    console.log('server running on port 3000');
-});
+
