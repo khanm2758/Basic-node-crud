@@ -28,6 +28,12 @@ app.get('/', (req, res)=>{
     res.render('index');
 });
 
+
+app.get('/login', function(req, res){
+
+    res.render('user/login')
+})
+
 app.get('/notes/create', (req, res)=>{
     res.render('notes/create');
 });
