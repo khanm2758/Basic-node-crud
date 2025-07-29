@@ -66,6 +66,11 @@ app.get('/notes/:id/edit', async(req, res)=>{
     res.render('notes/edit', {note: note});
 });
 
+// set the login route and redirect in the main interface of app
+app.post('/users/login', function(req, res){
+
+        res.redirect('/notes')
+})
 
 
 app.post('/notes/create', async (req, res)=>{
