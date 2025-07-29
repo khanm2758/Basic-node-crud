@@ -1,7 +1,8 @@
 const {MongoClient} = require('mongodb');
 const {mongoConn} = require('./connectionDetails');
 
-const conString = `mongodb+srv://${mongoConn.userid}:${mongoConn.password}@azure-cluster.qmuovmn.mongodb.net/?retryWrites=true&w=majority&appName=azure-cluster`
+const conString = `mongodb+srv://${mongoConn.userid}:${mongoConn.password}@cluster.ytiwmnz.mongodb.net/TestTodoApp?retryWrites=true&w=majority&appName=Cluster`;
+//const conString = `mongodb+srv://${mongoConn.userid}:${mongoConn.password}@azure-cluster.qmuovmn.mongodb.net/?retryWrites=true&w=majority&appName=azure-cluster`
 
 const client =  new MongoClient(conString);
 
