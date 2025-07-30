@@ -14,6 +14,7 @@ connect()
 .catch(()=>{
     console.log('Server running in error')
 })
+
 const notes = require('./data/data');
 const { ObjectId } = require('mongodb');
 
@@ -40,7 +41,7 @@ app.get('/notes/create', (req, res)=>{
 
 app.get('/notes/:id', async (req, res)=>{
     
-    let collection = getDb().collection('notes');
+    let collection = getDb().collection('todoItems');
     let note  = await collection.findOne({"_id": new ObjectId(req.params.id)})
 
     if(!note)
@@ -50,7 +51,7 @@ app.get('/notes/:id', async (req, res)=>{
 
 app.get('/notes', async (req, res)=>{
 
-    let collection = getDb().collection('notes');
+    let collection = getDb().collection('todoItems');
     const notes = await collection.find().toArray();
 
     res.render('notes/index', {notes: notes})
@@ -60,7 +61,7 @@ app.get('/notes', async (req, res)=>{
 
 app.get('/notes/:id/edit', async(req, res)=>{
     
-    const collection = getDb().collection('notes');
+    const collection = getDb().collection('todoItems');
     var note = await collection.findOne({"_id": new ObjectId(req.params.id)});
 
     res.render('notes/edit', {note: note});
@@ -80,7 +81,7 @@ app.post('/notes/create', async (req, res)=>{
     note.body = req.body.body;
     note.isCompleted = false;
 
-    let collection = getDb().collection('notes');
+    let collection = getDb().collection('todoItems');
 
     await collection.insertOne(note);
     res.redirect('/notes');
@@ -88,7 +89,7 @@ app.post('/notes/create', async (req, res)=>{
 
 
 app.post('/notes/:id/delete', async (req, res)=>{
-    const collection = getDb().collection('notes');
+    const collection = getDb().collection('todoItems');
     var noteToDelete = await collection.findOne({"_id": new ObjectId(req.params.id)});
     const deletedNote = await collection.deleteOne(noteToDelete);
     console.log(deletedNote);
@@ -96,12 +97,12 @@ app.post('/notes/:id/delete', async (req, res)=>{
 });
 
 app.post('/notes/:id/edit', async (req, res)=>{
-    const collection = getDb().collection('notes');
+    const collection = getDb().collection('todoItems');
     var note = await collection.findOne({"_id": new ObjectId(req.params.id)});
     note.title = req.body.title? req.body.title: note.title;
     note.body = req.body.body? req.body.body: note.body;
     note.isCompleted = req.body.isCompleted? req.body.isCompleted : note.isCompleted;
-    collection.replaceOne({_id: note._id}, note);
+    await collection.replaceOne({_id: note._id}, note);
     res.redirect(`/notes/${note._id}`);
 });
 
