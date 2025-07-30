@@ -15,7 +15,7 @@ connect()
     console.log('Server running in error')
 })
 
-const notes = require('./data/data');
+//const notes = require('./data/data');
 const { ObjectId } = require('mongodb');
 
 
@@ -80,6 +80,7 @@ app.post('/notes/create', async (req, res)=>{
     note.title = req.body.title;
     note.body = req.body.body;
     note.isCompleted = false;
+    
 
     let collection = getDb().collection('todoItems');
 
@@ -104,6 +105,27 @@ app.post('/notes/:id/edit', async (req, res)=>{
     note.isCompleted = req.body.isCompleted? req.body.isCompleted : note.isCompleted;
     await collection.replaceOne({_id: note._id}, note);
     res.redirect(`/notes/${note._id}`);
+});
+
+//  Handles marking a note as done.
+app.post('/notes/:id/done', async (req, res) => {
+    try {
+        const id = req.params.id;
+        const collection = getDb().collection('todoItems');
+
+        // Find the note by its ID and update the 'done' field to true
+        await collection.updateOne(
+            { "_id": new ObjectId(id) },
+            { $set: { done: true } }
+        );
+
+        // Redirect the user back to the same note's view page
+        res.redirect(`/notes/${id}`);
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Error updating note.');
+    }
 });
 
 

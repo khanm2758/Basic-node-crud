@@ -7,7 +7,7 @@
   <p>Status: <span class="badge <%= note.done ? 'bg-success' : 'bg-warning text-dark' %>"><%= note.done ? 'Done' : 'Pending' %></span></p>
   <div class="mt-3">
     <% if (!note.done) { %>
-      <form action="/notes/<%= note.id %>/done" method="POST" class="d-inline">
+      <form action="/notes/<%= note._id %>/done" method="POST" class="d-inline">
         <button class="btn btn-warning">Mark as Done</button>
       </form>
     <% } %>
