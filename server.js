@@ -115,7 +115,7 @@ app.post('/notes/:id/done', async (req, res) => {
 
         // Find the note by its ID and update the 'done' field to true
         await collection.updateOne(
-            { "_id": new ObjectId(id) },
+            { "_id":  ObjectId.createFromHexString(id) },
             { $set: { done: true } }
         );
 
