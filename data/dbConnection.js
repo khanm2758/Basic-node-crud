@@ -1,7 +1,12 @@
 const {MongoClient} = require('mongodb');
-const {mongoConn} = require('./connectionDetails');
+//const {mongoConn} = require('./connectionDetails');
 
-const conString = `mongodb+srv://${mongoConn.userid}:${mongoConn.password}@cluster.ytiwmnz.mongodb.net/TestTodoApp?retryWrites=true&w=majority&appName=Cluster`;
+
+// Read credentials securely from the environment variables
+const userid = encodeURIComponent(process.env.DB_USER);
+const password = encodeURIComponent(process.env.DB_PASS);
+
+const conString = `mongodb+srv://${userid}:${password}@cluster.ytiwmnz.mongodb.net/TestTodoApp?retryWrites=true&w=majority&appName=Cluster`;
 //const conString = `mongodb+srv://${mongoConn.userid}:${mongoConn.password}@azure-cluster.qmuovmn.mongodb.net/?retryWrites=true&w=majority&appName=azure-cluster`
 
 const client =  new MongoClient(conString);

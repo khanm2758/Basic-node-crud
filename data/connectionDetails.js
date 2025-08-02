@@ -1,6 +1,9 @@
 const mongoConn = {
-  userid: encodeURIComponent("mohammadmohiuddin2758"),
-  password: encodeURIComponent("iBP#S4Ukct.pzgM"),
+  userid: encodeURIComponent(process.env.DB_USER),
+  password: encodeURIComponent(process.env.DB_PASS),
 };
+
+
+
 
 module.exports = { mongoConn };
